@@ -70,15 +70,17 @@ public class Player {
         }
     }
     public void dash(){
+        dashing  = true;
         if(facingRight){
-            if(xCoord + 100 <= 1000){
-                xCoord += 100;
+            if(xCoord + 50 <= 1000){
+                xCoord += 50;
             }
         }else {
-            if (xCoord - 100 >= 0) {
-                xCoord -= 100;
+            if (xCoord - 50 >= 0) {
+                xCoord -= 50;
             }
         }
+        dashing = false;
     }
 
     public BufferedImage getPlayerImg(){

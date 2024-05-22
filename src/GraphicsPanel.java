@@ -65,6 +65,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         if(pressedKeys[38]){
             player.moveUp();
         }
+        if(pressedKeys[32]){
+            player.dash();
+        }
+
 
     }
 
