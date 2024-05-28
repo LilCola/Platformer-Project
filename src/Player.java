@@ -1,21 +1,27 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 public class Player {
-    private final double MOVE_AMT = 0.5;
+    private final double MOVE_AMT = 0.1;
     private BufferedImage right;
     private BufferedImage left;
     private BufferedImage dashingLeft;
     private BufferedImage dashingRight;
     private boolean facingRight;
     private boolean dashing;
+    private boolean isFalling;
+    private double yDelta = 0;
+    private Timer timer;
     private double xCoord;
     private double yCoord;
 
     public Player(String leftImg, String rightImg, String dashLeft, String dashRight){
         facingRight = true;
         dashing = false;
+        isFalling = false;
         xCoord = 50;
         yCoord = 400;
         try{
@@ -43,44 +49,65 @@ public class Player {
         facingRight = false;
     }
 
-    public void dashing(){
-        dashing = true;
-    }
 
     public void moveRight(){
         if(xCoord + MOVE_AMT + getPlayerImg().getWidth() <= 1000){
             xCoord += MOVE_AMT;
         }
+        dashing =false;
     }
 
     public void moveLeft(){
         if(xCoord - MOVE_AMT >= 0){
             xCoord -= MOVE_AMT;
         }
+        dashing = false;
     }
 
     public void moveUp(){
         if(yCoord - MOVE_AMT >= 0){
             yCoord -= MOVE_AMT;
+            yCoord -= MOVE_AMT;
+            yCoord -= MOVE_AMT;
+            yCoord -= MOVE_AMT;
+            isFalling = true;
         }
     }
     public void moveDown(){
         if(yCoord + MOVE_AMT + getPlayerImg().getHeight() <= 800){
             yCoord += MOVE_AMT;
+            isFalling = true;
         }
     }
     public void dash(){
         dashing  = true;
         if(facingRight){
-            if(xCoord + 50 <= 1000){
-                xCoord += 50;
+            if(xCoord + 2 <= 1000){
+                xCoord += .5;
+                xCoord += .5;
+                xCoord += .5;
+                xCoord += .5;
             }
         }else {
-            if (xCoord - 50 >= 0) {
-                xCoord -= 50;
+            if (xCoord - 2 >= 0) {
+                xCoord -= .5;
+                xCoord -= .5;
+                xCoord -= .5;
+                xCoord -= .5;
             }
         }
-        dashing = false;
+    }
+
+    public void gravity(){
+        while(isFalling){
+            double gravityDelta = 0.01;
+            double terminalVelocity = 1;
+            yDelta += gravityDelta;
+            if (yDelta > terminalVelocity) {
+                yDelta = terminalVelocity;
+            }
+            yCoord -= yDelta;
+        }
     }
 
     public BufferedImage getPlayerImg(){
@@ -98,7 +125,6 @@ public class Player {
     public Rectangle getPlayerRect(){
         int imageHeight = getPlayerImg().getHeight();
         int imageWidth = getPlayerImg().getWidth();
-        Rectangle rect = new Rectangle((int)xCoord, (int)yCoord, imageWidth, imageHeight);
-        return rect;
+        return new Rectangle((int)xCoord, (int)yCoord, imageWidth, imageHeight);
     }
 }

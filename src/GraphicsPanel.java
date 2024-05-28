@@ -49,7 +49,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         }
         //down s
         if(pressedKeys[83]){
-            player.moveDown();
+            player.gravity();
         }
         if(pressedKeys[39]){
             player.faceRight();
