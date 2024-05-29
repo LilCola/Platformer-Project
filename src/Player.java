@@ -48,6 +48,15 @@ public class Player {
     public void faceLeft(){
         facingRight = false;
     }
+    public void isFalling(boolean newBoolean){
+        isFalling = newBoolean;
+    }
+    public boolean getIsFalling(){
+        return isFalling;
+    }
+    public void changeYCoord(double yCoord){
+        this.yCoord = yCoord;
+    }
 
 
     public void moveRight(){
@@ -76,7 +85,6 @@ public class Player {
     public void moveDown(){
         if(yCoord + MOVE_AMT + getPlayerImg().getHeight() <= 800){
             yCoord += MOVE_AMT;
-            isFalling = true;
         }
     }
     public void dash(){
@@ -87,6 +95,9 @@ public class Player {
                 xCoord += .5;
                 xCoord += .5;
                 xCoord += .5;
+                if(xCoord+getPlayerImg().getWidth() >= 1000){
+                    xCoord = 1000 - getPlayerImg().getWidth();
+                }
             }
         }else {
             if (xCoord - 2 >= 0) {
@@ -100,13 +111,17 @@ public class Player {
 
     public void gravity(){
         while(isFalling){
-            double gravityDelta = 0.01;
-            double terminalVelocity = 1;
+            double gravityDelta = 0.1;
+            double terminalVelocity = 4;
             yDelta += gravityDelta;
             if (yDelta > terminalVelocity) {
                 yDelta = terminalVelocity;
             }
-            yCoord -= yDelta;
+            yCoord = yCoord+yDelta;
+            if (yCoord + getPlayerImg().getHeight() > 800) {
+                yDelta = 0;
+                isFalling = false;
+            }
         }
     }
 
