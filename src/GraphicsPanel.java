@@ -12,7 +12,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
     private BufferedImage background;
     private double yDelta = 0;
     private Timer timer;
-    private Player player = new Player("images/leftKirby.png", "images/rightKirby.jpg", "images/starLeft.png", "images/starRight.png");;
+    private Player player = new Player("images/leftKirby.png", "images/rightKirby.png", "images/starLeft.png", "images/starRight.png");;
     private boolean[] pressedKeys;
 
     public GraphicsPanel(){
@@ -32,12 +32,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         super.paintComponent(g);
         //g.drawImage(background, 0, 0, null);
         g.drawImage(player.getPlayerImg(), player.getxCoord(), player.getyCoord(), null);
-        Rectangle rect = new Rectangle(10, 700, 300, 70);
-        g.setColor(Color.red );
-        g.drawRect(10, 700, 300, 70);
-        if(player.getPlayerRect().intersects(rect)){
-            player.isFalling(false);
-        }
 
 
 
@@ -45,18 +39,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
             player.faceLeft();
             player.moveLeft();
         }
+
         if(pressedKeys[68]){
             player.faceRight();
             player.moveRight();
         }
-        //up w
+
         if(pressedKeys[87]){
             player.moveUp();
         }
-        //down s
-        if(pressedKeys[83]){
-            player.gravity();
-        }
+
         if(pressedKeys[39]){
             player.faceRight();
             player.moveRight();
@@ -65,9 +57,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
             player.faceLeft();
             player.moveLeft();
         }
-        if(pressedKeys[40]){
-            player.moveDown();
-        }
+
         if(pressedKeys[38]){
             player.moveUp();
         }
@@ -89,21 +79,21 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         pressedKeys[key] = false;
     }
     public void gravity(){
-        while(player.getIsFalling()){
+        while(player.getIsFalling()) {
             double gravityDelta = 0.1;
             double terminalVelocity = 4;
             yDelta += gravityDelta;
             if (yDelta > terminalVelocity) {
                 yDelta = terminalVelocity;
             }
-            player.changeYCoord((player.getyCoord()+yDelta));
-            if (player.getyCoord() + player.getPlayerImg().getHeight() > 800) {
+            player.changeYCoord((player.getyCoord() + yDelta));
+            if (player.getyCoord() + player.getPlayerImg().getHeight() > 750) {
                 yDelta = 0;
                 player.isFalling(false);
             }
         }
-        repaint();
     }
+    public void Collision(){}
 
     public void mouseClicked(MouseEvent e){}
     public void mousePressed(MouseEvent e){}

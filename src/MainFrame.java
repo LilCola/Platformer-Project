@@ -7,7 +7,7 @@ public class MainFrame extends JFrame implements Runnable {
     public MainFrame(){
         JFrame frame = new JFrame("Platformer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 800);
+        frame.setSize(1000, 790);
         frame.setLocationRelativeTo(null);
 
         panel = new GraphicsPanel();
@@ -17,17 +17,68 @@ public class MainFrame extends JFrame implements Runnable {
         Thread thread1 = new Thread(this);
         thread1.start();
 
+
     }
 
     public void run(){
         while (true){
             panel.repaint();
+            ThreadGravity threadG = new ThreadGravity("tG");
+            threadG.start();
         }
     }
-    public void gravity() {
-        panel.gravity();
-        Thread thread2 = new Thread(this);
-        thread2.start();
+    class ThreadGravity extends Thread {
+        private Thread t;
+        private String threadName;
+
+        ThreadGravity( String name) {
+            threadName = name;
+        }
+
+        public void run() {
+            try {
+                for(int i = 4; i > 0; i--) {
+                    Thread.sleep(50);
+                }
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+            panel.gravity();
+        }
+
+        public void start () {
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start ();
+            }
+        }
     }
+    class ThreadCollision extends Thread {
+        private Thread t;
+        private String threadName;
+
+        ThreadCollision( String name) {
+            threadName = name;
+        }
+
+        public void run() {
+            try {
+                for(int i = 4; i > 0; i--) {
+                    Thread.sleep(50);
+                }
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+            panel.gravity();
+        }
+
+        public void start () {
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start ();
+            }
+        }
+    }
+
 
 }

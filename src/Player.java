@@ -21,7 +21,7 @@ public class Player {
     public Player(String leftImg, String rightImg, String dashLeft, String dashRight){
         facingRight = true;
         dashing = false;
-        isFalling = false;
+        isFalling = true;
         xCoord = 50;
         yCoord = 400;
         try{
@@ -82,11 +82,7 @@ public class Player {
             isFalling = true;
         }
     }
-    public void moveDown(){
-        if(yCoord + MOVE_AMT + getPlayerImg().getHeight() <= 800){
-            yCoord += MOVE_AMT;
-        }
-    }
+
     public void dash(){
         dashing  = true;
         if(facingRight){
@@ -109,21 +105,6 @@ public class Player {
         }
     }
 
-    public void gravity(){
-        while(isFalling){
-            double gravityDelta = 0.1;
-            double terminalVelocity = 4;
-            yDelta += gravityDelta;
-            if (yDelta > terminalVelocity) {
-                yDelta = terminalVelocity;
-            }
-            yCoord = yCoord+yDelta;
-            if (yCoord + getPlayerImg().getHeight() > 800) {
-                yDelta = 0;
-                isFalling = false;
-            }
-        }
-    }
 
     public BufferedImage getPlayerImg(){
         if(dashing && facingRight) {
