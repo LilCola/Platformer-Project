@@ -13,8 +13,9 @@ public class Player {
     private boolean facingRight;
     private boolean dashing;
     private boolean isFalling;
+    private static boolean canDash;
+    private static boolean canJump;
     private double yDelta = 0;
-    private Timer timer;
     private double xCoord;
     private double yCoord;
 
@@ -22,6 +23,8 @@ public class Player {
         facingRight = true;
         dashing = false;
         isFalling = true;
+        canDash = true;
+        canJump = true;
         xCoord = 50;
         yCoord = 400;
         try{
@@ -74,12 +77,19 @@ public class Player {
     }
 
     public void moveUp(){
-        if(yCoord - MOVE_AMT >= 0){
-            yCoord -= MOVE_AMT;
-            yCoord -= MOVE_AMT;
-            yCoord -= MOVE_AMT;
-            yCoord -= MOVE_AMT;
-            isFalling = true;
+
+        if(yCoord - 10 >= 0 && canJump){
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            yCoord -= 1;
+            canJump = false;
         }
     }
 

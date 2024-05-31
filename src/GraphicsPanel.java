@@ -1,12 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.*;
 
-public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
+public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage baseKirbyImg;
     private BufferedImage starKirbyImg;
     private BufferedImage background;
@@ -26,6 +23,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
+        timer = new Timer(1000, this);
     }
 
     public void paintComponent(Graphics g){
@@ -47,6 +45,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
 
         if(pressedKeys[87]){
             player.moveUp();
+            player.moveUp();
+            player.moveUp();
+            player.moveUp();
+            player.moveUp();
         }
 
         if(pressedKeys[39]){
@@ -59,6 +61,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
         }
 
         if(pressedKeys[38]){
+            player.moveUp();
+            player.moveUp();
+            player.moveUp();
+            player.moveUp();
             player.moveUp();
         }
         if(pressedKeys[32]){
@@ -77,6 +83,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
         pressedKeys[key] = false;
+        if(pressedKeys[87]){
+            timer.start();
+            player.isFalling(true);
+        }
     }
     public void gravity(){
         while(player.getIsFalling()) {
@@ -93,6 +103,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
             }
         }
     }
+    public void fallingCountDown(){
+        while(pressedKeys[38] || pressedKeys[87]){
+            timer.restart();
+            timer.start();
+            player.isFalling(true);
+            timer.stop();
+        }
+    }
     public void Collision(){}
 
     public void mouseClicked(MouseEvent e){}
@@ -102,4 +120,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener{
     public void mouseEntered(MouseEvent e){}
     public void mouseExited(MouseEvent e){}
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
