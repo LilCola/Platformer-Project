@@ -7,7 +7,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private BufferedImage baseKirbyImg;
     private BufferedImage starKirbyImg;
     private BufferedImage background;
-    private double yDelta = 0;
     private Timer timer;
     private Player player = new Player("images/leftKirby.png", "images/rightKirby.png", "images/starLeft.png", "images/starRight.png");;
     private boolean[] pressedKeys;
@@ -23,15 +22,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        timer = new Timer(1000, this);
+        timer = new Timer(100, this);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //g.drawImage(background, 0, 0, null);
         g.drawImage(player.getPlayerImg(), player.getxCoord(), player.getyCoord(), null);
-
-
 
         if(pressedKeys[65]){
             player.faceLeft();
@@ -69,6 +66,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
         if(pressedKeys[32]){
             player.dash();
+            player.dash();
+            player.dash();
+            player.dash();
+            player.dash();
         }
 
 
@@ -83,15 +84,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void keyReleased(KeyEvent e){
         int key = e.getKeyCode();
         pressedKeys[key] = false;
-        if(pressedKeys[87]){
-            timer.start();
-            player.isFalling(true);
-        }
     }
     public void gravity(){
+        double yDelta = 0;
         while(player.getIsFalling()) {
-            double gravityDelta = 0.1;
-            double terminalVelocity = 4;
+            double gravityDelta = 0.001;
+            double terminalVelocity = 0.2;
             yDelta += gravityDelta;
             if (yDelta > terminalVelocity) {
                 yDelta = terminalVelocity;
@@ -103,15 +101,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             }
         }
     }
-    public void fallingCountDown(){
-        while(pressedKeys[38] || pressedKeys[87]){
-            timer.restart();
-            timer.start();
-            player.isFalling(true);
-            timer.stop();
+    public void dashAndJumpCounter(){
+        if(!player.getIsFalling()){
+            player.changeCanDash(true);
+            player.changeCanJump(true);
         }
     }
-    public void Collision(){}
+    public void Collision(){
+
+    }
 
     public void mouseClicked(MouseEvent e){}
     public void mousePressed(MouseEvent e){}

@@ -60,6 +60,12 @@ public class Player {
     public void changeYCoord(double yCoord){
         this.yCoord = yCoord;
     }
+    public void changeCanDash(boolean canDash){
+        this.canDash = canDash;
+    }
+    public void changeCanJump(boolean canJump){
+        this.canJump = canJump;
+    }
 
 
     public void moveRight(){
@@ -77,40 +83,48 @@ public class Player {
     }
 
     public void moveUp(){
-
-        if(yCoord - 10 >= 0 && canJump){
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
-            yCoord -= 1;
+        if(canJump){
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            yCoord -= 4;
+            isFalling = true;
             canJump = false;
+        }
+        if(yCoord < 0){
+            yCoord = 0;
         }
     }
 
     public void dash(){
         dashing  = true;
-        if(facingRight){
-            if(xCoord + 2 <= 1000){
-                xCoord += .5;
-                xCoord += .5;
-                xCoord += .5;
-                xCoord += .5;
+        if(canDash){
+            if(facingRight){
+                xCoord += 2;
+                xCoord += 2;
+                xCoord += 2;
+                xCoord += 2;
+                xCoord += 2;
                 if(xCoord+getPlayerImg().getWidth() >= 1000){
                     xCoord = 1000 - getPlayerImg().getWidth();
                 }
-            }
-        }else {
-            if (xCoord - 2 >= 0) {
-                xCoord -= .5;
-                xCoord -= .5;
-                xCoord -= .5;
-                xCoord -= .5;
+                canDash = false;
+            }else{
+                xCoord -= 2;
+                xCoord -= 2;
+                xCoord -= 2;
+                xCoord -= 2;
+                xCoord -= 2;
+                if(xCoord < 0){
+                    xCoord = 0;
+                }
+                canDash = false;
             }
         }
     }

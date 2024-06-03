@@ -25,6 +25,8 @@ public class MainFrame extends JFrame implements Runnable {
             panel.repaint();
             ThreadGravity threadG = new ThreadGravity("tG");
             threadG.start();
+            ThreadJumpAndDash threadJanD = new ThreadJumpAndDash("JanD");
+            threadJanD.start();
         }
     }
     class ThreadGravity extends Thread {
@@ -70,6 +72,32 @@ public class MainFrame extends JFrame implements Runnable {
                 System.out.println();
             }
             panel.gravity();
+        }
+
+        public void start () {
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start ();
+            }
+        }
+    }
+    class ThreadJumpAndDash extends Thread {
+        private Thread t;
+        private String threadName;
+
+        ThreadJumpAndDash( String name) {
+            threadName = name;
+        }
+
+        public void run() {
+            try {
+                for(int i = 4; i > 0; i--) {
+                    Thread.sleep(50);
+                }
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+            panel.dashAndJumpCounter();
         }
 
         public void start () {
