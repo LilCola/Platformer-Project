@@ -22,7 +22,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        timer = new Timer(100, this);
     }
 
     public void paintComponent(Graphics g){
@@ -48,25 +47,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             player.moveUp();
         }
 
-        if(pressedKeys[39]){
-            player.faceRight();
-            player.moveRight();
-        }
-        if(pressedKeys[37]){
-            player.faceLeft();
-            player.moveLeft();
-        }
-
-        if(pressedKeys[38]){
-            player.moveUp();
-            player.moveUp();
-            player.moveUp();
-            player.moveUp();
-            player.moveUp();
-        }
         if(pressedKeys[32]){
-            player.dash();
-            player.dash();
             player.dash();
             player.dash();
             player.dash();
@@ -88,21 +69,21 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void gravity(){
         double yDelta = 0;
         while(player.getIsFalling()) {
-            double gravityDelta = 0.001;
-            double terminalVelocity = 0.2;
+            double gravityDelta = 0.01;
+            double terminalVelocity = 1;
             yDelta += gravityDelta;
             if (yDelta > terminalVelocity) {
                 yDelta = terminalVelocity;
             }
             player.changeYCoord((player.getyCoord() + yDelta));
             if (player.getyCoord() + player.getPlayerImg().getHeight() > 750) {
-                yDelta = 0;
+                yDelta =0;
                 player.isFalling(false);
             }
         }
     }
     public void dashAndJumpCounter(){
-        if(!player.getIsFalling()){
+        if(!player.getIsFalling() && !player.getIsDashing()){
             player.changeCanDash(true);
             player.changeCanJump(true);
         }

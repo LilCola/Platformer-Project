@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -57,6 +56,7 @@ public class Player {
     public boolean getIsFalling(){
         return isFalling;
     }
+    public boolean getIsDashing(){return dashing;}
     public void changeYCoord(double yCoord){
         this.yCoord = yCoord;
     }
@@ -114,7 +114,6 @@ public class Player {
                 if(xCoord+getPlayerImg().getWidth() >= 1000){
                     xCoord = 1000 - getPlayerImg().getWidth();
                 }
-                canDash = false;
             }else{
                 xCoord -= 2;
                 xCoord -= 2;
@@ -124,7 +123,7 @@ public class Player {
                 if(xCoord < 0){
                     xCoord = 0;
                 }
-                canDash = false;
+
             }
         }
     }
