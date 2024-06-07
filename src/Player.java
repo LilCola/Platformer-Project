@@ -25,7 +25,7 @@ public class Player {
         canDash = true;
         canJump = true;
         xCoord = 50;
-        yCoord = 400;
+        yCoord = 0;
         try{
             left = ImageIO.read(new File(leftImg));
             right = ImageIO.read(new File(rightImg));
@@ -57,16 +57,18 @@ public class Player {
         return isFalling;
     }
     public boolean getIsDashing(){return dashing;}
+    public boolean getCanDash(){return canDash;}
     public void changeYCoord(double yCoord){
         this.yCoord = yCoord;
     }
+
     public void changeCanDash(boolean canDash){
         this.canDash = canDash;
     }
     public void changeCanJump(boolean canJump){
         this.canJump = canJump;
     }
-
+    public void changeDashing(boolean newBool){ dashing = newBool;}
 
     public void moveRight(){
         if(xCoord + MOVE_AMT + getPlayerImg().getWidth() <= 1000){
@@ -84,11 +86,11 @@ public class Player {
 
     public void moveUp(){
         if(canJump){
-            yCoord -= 4;
-            yCoord -= 4;
-            yCoord -= 4;
-            yCoord -= 4;
-            yCoord -= 4;
+            yCoord -= 100;
+            yCoord -= 10;
+            yCoord -= 10;
+            yCoord -= 10;
+            yCoord -= 10;
             yCoord -= 4;
             yCoord -= 4;
             yCoord -= 4;
@@ -103,7 +105,7 @@ public class Player {
     }
 
     public void dash(){
-        dashing  = true;
+        dashing =true;
         if(canDash){
             if(facingRight){
                 xCoord += 2;
@@ -125,6 +127,7 @@ public class Player {
                 }
 
             }
+
         }
     }
 

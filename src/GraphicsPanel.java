@@ -28,7 +28,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         super.paintComponent(g);
         //g.drawImage(background, 0, 0, null);
         g.drawImage(player.getPlayerImg(), player.getxCoord(), player.getyCoord(), null);
-
+        /*if(player.getIsFalling()){
+            player.changeYCoord((double)player.getyCoord() + 1);
+            if (player.getyCoord() + player.getPlayerImg().getHeight() > 750) {
+                player.isFalling(false);
+            }
+        }*/
         if(pressedKeys[65]){
             player.faceLeft();
             player.moveLeft();
@@ -51,8 +56,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             player.dash();
             player.dash();
             player.dash();
+            player.changeCanDash(false);
+            player.changeDashing(false);
         }
-
 
     }
 
@@ -68,14 +74,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     }
     public void gravity(){
         double yDelta = 0;
-        while(player.getIsFalling()) {
-            double gravityDelta = 0.01;
-            double terminalVelocity = 1;
+        if(player.getIsDashing()){
+            player.isFalling(false);
+        }
+        if(player.getIsFalling()) {
+            double gravityDelta = 1;
             yDelta += gravityDelta;
-            if (yDelta > terminalVelocity) {
-                yDelta = terminalVelocity;
-            }
-            player.changeYCoord((player.getyCoord() + yDelta));
+            player.changeYCoord((double)player.getyCoord() + yDelta);
             if (player.getyCoord() + player.getPlayerImg().getHeight() > 750) {
                 yDelta =0;
                 player.isFalling(false);

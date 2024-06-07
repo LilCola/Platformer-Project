@@ -7,7 +7,7 @@ public class MainFrame extends JFrame implements Runnable {
     public MainFrame(){
         JFrame frame = new JFrame("Platformer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 790);
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
 
         panel = new GraphicsPanel();
@@ -23,8 +23,8 @@ public class MainFrame extends JFrame implements Runnable {
     public void run(){
         while (true){
             panel.repaint();
-            ThreadGravity threadG = new ThreadGravity("tG");
-            threadG.start();
+            //ThreadGravity threadG = new ThreadGravity("tG");
+            //threadG.start();
             ThreadJumpAndDash threadJanD = new ThreadJumpAndDash("JanD");
             threadJanD.start();
         }
