@@ -86,6 +86,7 @@ public class Player {
 
     public void moveUp(){
         if(canJump){
+            isFalling = false;
             yCoord -= 100;
             yCoord -= 10;
             yCoord -= 10;
@@ -108,20 +109,20 @@ public class Player {
         dashing =true;
         if(canDash){
             if(facingRight){
-                xCoord += 2;
-                xCoord += 2;
-                xCoord += 2;
-                xCoord += 2;
-                xCoord += 2;
+                xCoord += 10;
+                xCoord += 10;
+                xCoord += 10;
+                xCoord += 10;
+                xCoord += 10;
                 if(xCoord+getPlayerImg().getWidth() >= 1000){
                     xCoord = 1000 - getPlayerImg().getWidth();
                 }
             }else{
-                xCoord -= 2;
-                xCoord -= 2;
-                xCoord -= 2;
-                xCoord -= 2;
-                xCoord -= 2;
+                xCoord -= 10;
+                xCoord -= 10;
+                xCoord -= 10;
+                xCoord -= 10;
+                xCoord -= 10;
                 if(xCoord < 0){
                     xCoord = 0;
                 }

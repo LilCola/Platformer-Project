@@ -13,6 +13,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel = new GraphicsPanel();
         frame.add(panel);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         Thread thread1 = new Thread(this);
         thread1.start();
@@ -23,8 +24,10 @@ public class MainFrame extends JFrame implements Runnable {
     public void run(){
         while (true){
             panel.repaint();
-            //ThreadGravity threadG = new ThreadGravity("tG");
-            //threadG.start();
+            ThreadGravity threadG = new ThreadGravity("tG");
+            threadG.start();
+            ThreadCollision threadC = new ThreadCollision("tC");
+            threadC.start();
             ThreadJumpAndDash threadJanD = new ThreadJumpAndDash("JanD");
             threadJanD.start();
         }
@@ -71,7 +74,7 @@ public class MainFrame extends JFrame implements Runnable {
             } catch (InterruptedException e) {
                 System.out.println();
             }
-            panel.gravity();
+            panel.Collision();
         }
 
         public void start () {

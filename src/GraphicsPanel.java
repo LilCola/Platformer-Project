@@ -8,7 +8,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private BufferedImage starKirbyImg;
     private BufferedImage background;
     private Timer timer;
-    private Player player = new Player("images/leftKirby.png", "images/rightKirby.png", "images/starLeft.png", "images/starRight.png");;
+    private Player player = new Player("images/leftKirby.png", "images/rightKirby.png", "images/starLeft.png", "images/starRight.png");
+    private Platform platforms = new Platform("images/RopePlatform.png");
     private boolean[] pressedKeys;
 
     public GraphicsPanel(){
@@ -22,18 +23,27 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
+
+
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //g.drawImage(background, 0, 0, null);
         g.drawImage(player.getPlayerImg(), player.getxCoord(), player.getyCoord(), null);
+        g.drawImage(platforms.getPlatformImg(), 50, 600, null);
+        g.drawRect(player.getxCoord(), player.getyCoord(), player.getPlayerImg().getWidth(), player.getPlayerImg().getHeight());
+        g.drawRect(50, 600, platforms.getPlatformImg().getWidth(), platforms.getPlatformImg().getHeight());
         /*if(player.getIsFalling()){
             player.changeYCoord((double)player.getyCoord() + 1);
             if (player.getyCoord() + player.getPlayerImg().getHeight() > 750) {
                 player.isFalling(false);
             }
         }*/
+        if(player.getyCoord()+player.getPlayerImg().getHeight() >=790){
+            player.isFalling(false);
+        }
+
         if(pressedKeys[65]){
             player.faceLeft();
             player.moveLeft();
@@ -57,7 +67,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             player.dash();
             player.dash();
             player.changeCanDash(false);
-            player.changeDashing(false);
         }
 
     }
@@ -94,7 +103,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
     }
     public void Collision(){
-
+        System.out.println(player.getyCoord());
+        System.out.println(600);
+        if(player.getPlayerRect().intersects(platforms.getPlatformRect())){
+            player.isFalling(false);
+        }
+        if(!(player.getPlayerRect().intersects(platforms.getPlatformRect()))){
+            player.isFalling(true);
+        }
     }
 
     public void mouseClicked(MouseEvent e){}
