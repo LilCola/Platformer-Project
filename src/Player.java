@@ -14,11 +14,13 @@ public class Player {
     private boolean isFalling;
     private static boolean canDash;
     private static boolean canJump;
+    public boolean touchingPlatform;
     private double yDelta = 0;
     private double xCoord;
     private double yCoord;
 
     public Player(String leftImg, String rightImg, String dashLeft, String dashRight){
+        touchingPlatform = false;
         facingRight = true;
         dashing = false;
         isFalling = true;
@@ -42,7 +44,7 @@ public class Player {
     public int getyCoord(){
         return (int) yCoord;
     }
-
+    public boolean getTouchingPlatform(){return touchingPlatform;}
     public void faceRight(){
         facingRight = true;
     }
@@ -61,6 +63,7 @@ public class Player {
     public void changeYCoord(double yCoord){
         this.yCoord = yCoord;
     }
+    public void changeTouchingPlatform(boolean newState){this.touchingPlatform = newState;}
 
     public void changeCanDash(boolean canDash){
         this.canDash = canDash;

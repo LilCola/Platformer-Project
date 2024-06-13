@@ -15,8 +15,9 @@ public class MainFrame extends JFrame implements Runnable {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
-        Thread thread1 = new Thread(this);
-        thread1.start();
+        Thread threadMain = new Thread(this);
+        threadMain.start();
+        threadMain.setPriority(Thread.MAX_PRIORITY);
 
 
     }
@@ -24,8 +25,11 @@ public class MainFrame extends JFrame implements Runnable {
     public void run(){
         while (true){
             panel.repaint();
-            ThreadGravity threadG = new ThreadGravity("tG");
-            threadG.start();
+            ThreadMovement threadM = new ThreadMovement("tM");
+            threadM.setPriority(9);
+            threadM.start();
+            //ThreadGravity threadG = new ThreadGravity("tG");
+            //threadG.start();
             ThreadCollision threadC = new ThreadCollision("tC");
             threadC.start();
             ThreadJumpAndDash threadJanD = new ThreadJumpAndDash("JanD");
@@ -110,6 +114,31 @@ public class MainFrame extends JFrame implements Runnable {
             }
         }
     }
+    class ThreadMovement extends Thread {
+        private Thread t;
+        private String threadName;
 
+        ThreadMovement( String name) {
+            threadName = name;
+        }
+
+        public void run() {
+            try {
+                for(int i = 4; i > 0; i--) {
+                    Thread.sleep(50);
+                }
+            } catch (InterruptedException e) {
+                System.out.println();
+            }
+            panel.movement();
+        }
+
+        public void start () {
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start ();
+            }
+        }
+    }
 
 }
